@@ -1,4 +1,5 @@
 # Lab: Write a Packer Template
+
 This lab will walk you through updating a Packer HCL Template. It uses the amazon-ebs source to create a custom image in the us-west-2 region of AWS.
 
 Duration: 30 minutes
@@ -16,7 +17,8 @@ cd packer_templates
 ```
 
 ### Task 1: Create a Source Block
-Source blocks define what kind of virtualization to use for the image, how to launch the image and how to connect to the image.  Sources can be used across multiple builds.  We will use the `amazon-ebs` source configuration to launch a `t3.micro` AMI in the `us-west-2` region.
+
+Source blocks define what kind of virtualization to use for the image, how to launch the image and how to connect to the image. Sources can be used across multiple builds. We will use the `amazon-ebs` source configuration to launch a `t3.micro` AMI in the `us-west-2` region.
 
 ### Step 1.1.1
 
@@ -50,6 +52,7 @@ source "amazon-ebs" "ubuntu" {
 ```
 
 ### Step 1.1.2
+
 The `packer init` command is used to download Packer plugin binaries. This is the first command that should be executed when working with a new or existing template. This command is always safe to run multiple times.
 
 ```shell
@@ -57,6 +60,7 @@ packer init aws-ubuntu.pkr.hcl
 ```
 
 ### Task 2: Validate the Packer Template
+
 Packer templates can be auto formatted and validated via the Packer command line.
 
 ### Step 2.1.1
@@ -64,15 +68,17 @@ Packer templates can be auto formatted and validated via the Packer command line
 Format and validate your configuration using the `packer fmt` and `packer validate` commands.
 
 ```shell
-packer fmt aws-ubuntu.pkr.hcl 
+packer fmt aws-ubuntu.pkr.hcl
 packer validate aws-ubuntu.pkr.hcl
 ```
 
 ### Task 3: Create a Builder Block
-Builders are responsible for creating machines and generating images from them for various platforms.  They are use in tandem with the source block within a template.
+
+Builders are responsible for creating machines and generating images from them for various platforms. They are use in tandem with the source block within a template.
 
 ### Step 3.1.1
-Add a builder block to `aws-ubuntu.pkr.hcl` referencing the source specified above.  The source can be referenced usin the HCL interpolation syntax.
+
+Add a builder block to `aws-ubuntu.pkr.hcl` referencing the source specified above. The source can be referenced usin the HCL interpolation syntax.
 
 ```hcl
 build {
@@ -83,6 +89,7 @@ build {
 ```
 
 ### Task 4: Build a new Image using Packer
+
 The `packer build` command is used to initiate the image build process for a given Packer template. For this lab, please note that you will need credentials for your AWS account in order to properly execute a `packer build`. You can set your credentials using [environment variables](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html#linux), using [aws configure](https://docs.aws.amazon.com/cli/latest/reference/configure/) if you have the AWSCLI installed, or [embed the credentials](https://www.packer.io/docs/builders/amazon/ebsvolume#access-configuration) in the template.
 
 > Example using environment variables on a Linux or macOS:
@@ -102,6 +109,7 @@ PS C:\> $Env:AWS_DEFAULT_REGION="us-west-2"
 ```
 
 ### Step 4.1.1
+
 Run a `packer build` for the `aws-ubuntu.pkr.hcl` template.
 
 ```shell
@@ -150,5 +158,6 @@ us-west-2: ami-0561bdc79bbb8f5a0
 **Note:** This lab assumes you have the default VPC available in your account. If you do not, you will need to add the [`vpc_id`](https://www.packer.io/docs/builders/amazon/ebs#vpc_id) and [`subnet_id`](https://www.packer.io/docs/builders/amazon/ebs#subnet_id). The subnet will need to have public access and a valid route to an Internet Gateway.
 
 ##### Resources
-* Packer [Docs](https://www.packer.io/docs/index.html)
-* Packer [CLI](https://www.packer.io/docs/commands/index.html)
+
+- Packer [Docs](https://www.packer.io/docs/index.html)
+- Packer [CLI](https://www.packer.io/docs/commands/index.html)
